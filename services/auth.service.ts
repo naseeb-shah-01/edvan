@@ -1,7 +1,7 @@
 import { AuthResponse, LoginCredentials, RegisterCredentials } from '@/types/auth'
 
 class AuthService {
-  private readonly API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1'
+  private readonly API_URL = 'https://edvantagebackend-production.up.railway.app/api/v1'
 
   async login(credentials: LoginCredentials): Promise<AuthResponse> {
     const response = await fetch(`${this.API_URL}/auth/login`, {

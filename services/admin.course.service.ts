@@ -2,7 +2,7 @@ import {  CourseResponseWithAdditionalDetails, CreateCourse, CreateCourseRespons
 import api from "@/lib/axios"
 
 class AdminCourse {
-  private readonly API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1'
+  private readonly API_URL =  'https://edvantagebackend-production.up.railway.app/api/v1'
 
   async createCourse(CourseData: CreateCourse): Promise<CreateCourseResponse> {
     const response = await api.post(`/courses`, 
