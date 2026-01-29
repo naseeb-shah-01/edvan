@@ -5,7 +5,7 @@ class AdminCourse {
   private readonly API_URL =  'https://edvantagebackend-production.up.railway.app/api/v1'
 
   async createCourse(CourseData: CreateCourse): Promise<CreateCourseResponse> {
-    const response = await api.post(`/courses`, 
+    const response = await api.post(`/courses/`, 
     JSON.stringify(CourseData)
     )
 
