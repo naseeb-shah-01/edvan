@@ -6,7 +6,8 @@ import { useAuthStore } from "@/lib/store/auth";
 import { ApiError } from "@/utils/errors";
 import axios from "axios";
 import { get } from "http";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/navigation";
+
 import { useEffect, useMemo, useState } from "react";
 
 type Course = {
@@ -165,10 +166,14 @@ type Props = {
 export  function CourseGrid({ courses }: Props) {
   const [loadingId, setLoadingId] = useState<number | null>(null)
   const user= useAuthStore((state) => state.user) 
-    
+    const router=useRouter()
   const isAdmin=user?.role==="admin"
  
   const handleEnroll = async (courseId: number) => {
+    if(isAdmin){
+     router.push(`/admin/course/${courseId}`) 
+     return
+    }
     try {
       setLoadingId(courseId)
 
