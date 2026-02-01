@@ -1,8 +1,9 @@
 import {  CourseResponseWithAdditionalDetails, CreateCourse, CreateCourseResponse, CreateCourseSection, CreateCourseSectionResponse } from "@/types/course"
 import api from "@/lib/axios"
+import { DashboardStats } from "@/types/dashboard"
 
-class AdminCourse {
-  private readonly API_URL =  'https://edvantagebackend-production.up.railway.app/api/v1'
+class AdminDashboard {
+  
 
   async createCourse(CourseData: CreateCourse): Promise<CreateCourseResponse> {
     const response = await api.post(`/courses/`, 
@@ -26,8 +27,8 @@ class AdminCourse {
 
     return response.data
   }
- async getCourse(id:number):Promise<CourseResponseWithAdditionalDetails> {
-    const response = await api.get(`/courses/all-details/${id}`
+ async getDashboard():Promise<DashboardStats> {
+    const response = await api.get(`/admin/dashboard`
    
     )
 
@@ -37,30 +38,8 @@ class AdminCourse {
 
     return response.data
   }
-  async  addLessonToSection( lessonData:any):Promise<any> {
-    const response = await api.post(`/admin/create/lesson`, 
-    JSON.stringify(lessonData)
-    )
 
-    if (!response.status.toString().startsWith('2')) {
-      throw new Error('Failed to add lesson to section')
-    }
-
-    return response.data
-  }
+}
 
 
-  async  getAllLessonBySection(id:number):Promise<any[]> {
-    const response = await api.get(`/admin/all/lessons/${id}`
-   
-    )
-
-    if (!response.status.toString().startsWith('2')) {
-      throw new Error('Failed to fetch lessons')
-    }
-
-    return response.data
-
-}}
-
-export const AdminCourseService = new AdminCourse()
+export const AdminDashboardService = new AdminDashboard()

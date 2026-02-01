@@ -4,7 +4,9 @@ import { Header } from "@/components/header"
 import axios from "@/lib/axios"
 import api from "@/lib/axios"
 import { useAuthStore } from "@/lib/store/auth"
+import { useRouter } from "next/navigation"
 import React, { useEffect } from "react"
+import { toast } from "sonner"
 
 /* =======================
    TypeScript Types
@@ -28,7 +30,8 @@ type Enrollment = {
   user_id: number
   progress: number
   enrolled_at: string
-  course: Course
+  course: Course,
+  
 }
 
 /* =======================
@@ -51,7 +54,16 @@ const ProgressBar = ({ value }: { value: number }) => {
 ======================= */
 
 const CourseCard = ({ enrollment }: { enrollment: Enrollment }) => {
-  const { course, progress } = enrollment
+  const { course, progress,id } = enrollment
+  const router=useRouter()
+  const navigateToCourse=(id:number)=>{
+    if(id){
+      router.push(`/student/course/${id}`)
+    }else{
+      toast .error("Invalid course ID")
+    }
+  }
+
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition">
@@ -84,7 +96,7 @@ const CourseCard = ({ enrollment }: { enrollment: Enrollment }) => {
       </div>
 
       {/* Button */}
-      <button className="w-full bg-black text-white py-2 rounded-lg text-sm hover:bg-gray-800 transition">
+      <button className="w-full bg-black text-white py-2 rounded-lg text-sm hover:bg-gray-800 transition" onClick={()=>navigateToCourse(id)}>
         Continue Learning
       </button>
     </div>
@@ -136,6 +148,7 @@ const MyCourses = () => {
         <CourseCard
           key={enrollment.id}
           enrollment={enrollment}
+          
         />
       ))}
     </div>

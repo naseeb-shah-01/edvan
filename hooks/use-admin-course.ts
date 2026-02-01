@@ -4,7 +4,13 @@ import { set } from "date-fns";
 import { use, useState } from "react";
 import { toast } from "sonner";
 
-
+const initialCourseSection: CreateCourseSection = {
+  title: "", 
+  description: "", 
+  course_id: 0, 
+  
+  order: 1,
+}
 
 export const useAdminCourse = (initialData: CreateCourse) => {
   const [courseData, setCourseData] = useState<CreateCourse>(initialData);
@@ -51,12 +57,16 @@ const handleAddCourse= async() => {
     }
 }
 const handleAddCourseSection= async() => {
-
+ if(courseData.id===undefined){
+  alert('Please create the course first');
+  return
+ }
     try{
         setIsLoading(true);
-        const response= await AdminCourseService.CreateCourseSection(courseSection)
+        const response= await AdminCourseService.CreateCourseSection({...courseSection,course_id:courseData.id})
         toast.success('Course Section created successfully');
         setSections(pre=>[...pre,response]);
+        setCourseSection(initialCourseSection);
     }catch{
         console.error('Error creating course');
         toast.error('Error creating course');
@@ -71,7 +81,7 @@ const handleAddCourseSection= async() => {
   return {
     courseData,
     handleCourseUpdate,
-    handleUpdateCourseDetails,sections,
+    handleUpdateCourseDetails,sections,setSections,
     handleAddCourse,loading:isLoading,courseSection,handleUpdateCourseSectionDetails,handleAddCourseSection
   };
 };

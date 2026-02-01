@@ -33,7 +33,9 @@ export const ROUTES = {
 
   // admin
   ADMIN_DASHBOARD: "/admin/dashboard",
-  ADMIN_USERS: "/admin/users",
+  ADMIN_USERS: "/admin/students",
+  ADMIN_INSTRUCTORS: "/admin/instructors",
+  ADMIN_ENROLLMENTS: "/admin/enrollments",
   ADMIN_COURSES_ADD: "/admin/addcourse",
 } as const
 
@@ -58,7 +60,7 @@ export const PUBLIC_NAV: readonly NavLink[] = [
 export const ROLE_BASED_NAV: Record<Role, readonly NavLink[]> = {
   admin: [
     { label: "Dashboard", href: ROUTES.ADMIN_DASHBOARD },
-    { label: "Users", href: ROUTES.ADMIN_USERS },
+    { label: "Student", href: ROUTES.ADMIN_USERS },
     { label: "Courses", href: ROUTES.COURSES },
     {label:"Add Course", href: ROUTES.ADMIN_COURSES_ADD }
   ],
